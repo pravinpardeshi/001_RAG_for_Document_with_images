@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Document Chat System</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 RAG Document Chat System</h1>
+            <p>Upload documents and chat with them using AI</p>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span id="themeIcon">🌙</span>
+            </button>
+        </header>
+
+        <main>
+            <!-- Chat Section -->
+            <section class="chat-section">
+                <h2>💬 Chat with Documents</h2>
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="welcome-message">
+                            <p>👋 Welcome! Upload a document and start asking questions about it.</p>
+                        </div>
+                    </div>
+                    <div id="loadingIndicator" class="loading-indicator hidden">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">
+                            <span>AI is thinking...</span>
+                            <span id="responseTimer" class="response-timer">0.0s</span>
+                        </div>
+                    </div>
+                    <div class="chat-input-container" style="align-items: center;">
+                        <textarea 
+                            id="chatInput" 
+                            placeholder="Ask a question about your documents..."
+                            rows="3"
+                        ></textarea>
+                        <button id="sendButton" class="btn btn-primary">
+                            <span id="sendButtonText">Send</span>
+                            <div id="sendSpinner" class="spinner hidden"></div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <h2>📤 Upload Document</h2>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" accept=".pdf" hidden>
+                    <div class="upload-content">
+                        <div class="upload-icon">📄</div>
+                        <p>Drag & drop a PDF file here or click to browse</p>
+                        <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+                <div id="uploadStatus" class="upload-status"></div>
+            </section>
+
+            <!-- Documents List -->
+            <section class="documents-section">
+                <h2>📋 Uploaded Documents</h2>
+                <div id="documentsList" class="documents-list">
+                    <p class="no-documents">No documents uploaded yet</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Image Modal -->
+        <div id="imageModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img id="modalImage" src="" alt="Document Image">
+                <div class="image-caption"></div>
+            </div>
+        </div>
+        <div>
+            <footer class="footer">
+                <span>&copy; 2026 RAG Document Chat System. All rights reserved.</span>
+            </footer>
+        </div>    
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script>
+        // Inline fallback for theme icon update (in case script.js is cached)
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeIcon = document.getElementById('themeIcon');
+            const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        });
+    </script>
+</body>
+</html>
